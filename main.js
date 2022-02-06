@@ -1,38 +1,47 @@
 'use strict';
 
+const STATUS = {
+    TO_DO: 'To Do',
+    IN_PROGRESS: 'In Progress',
+    DONE: 'Done',
+}
+
+const DEFAULT_STATUS = STATUS.TO_DO;
+
 const list = {
-    'create a new practice task': 'In Progress',
-    'make a bed': 'Todo',
-    'write a post': 'Done',
+    'create a new practice task': STATUS.IN_PROGRESS,
+    'make a bed': STATUS.TO_DO,
+    'write a post': STATUS.DONE,
 }
 
 
-function changeStatus(taskName, taskStatus) {
-    if (taskName in list) list[taskName] = taskStatus;
+function changeStatus(name, status) {
+    if (name in list) list[name] = status;
 };
 
 
-function addTask(taskName) {
-    if (!(taskName in list)) list[taskName] = 'Todo';
+function addTask(name) {
+    if (!(name in list)) list[name] = DEFAULT_STATUS;
 };
 
 
-function deleteTask(taskName) {
-    if (taskName in list) delete list[taskName];
+function deleteTask(name) {
+    if (name in list) delete list[name];
 };
 
 
 function showList() {
-    let todo = '';
-    let inProgress = '';
-    let done = '';
+
+    const tasks = {
+        [STATUS.TO_DO]: '',
+        [STATUS.IN_PROGRESS]: '',
+        [STATUS.DONE]: '',
+    }
 
     for (let key in list) {
-        if (list[key] === 'Todo') todo += `'${key}' \n`;
-        if (list[key] === 'In Progress') inProgress += `'${key}' \n`;
-        if (list[key] === 'Done') done += `'${key}' \n`;
+        tasks[list[key]] += key + '\n';
     }
-    console.log(`Todo:\n${todo || '-\n'}In Progress:\n${inProgress || '-\n'}Done:\n${done || '-\n'}`);
+    console.log(`${STATUS.TO_DO}:\n${tasks[STATUS.TO_DO] || '-\n'}${STATUS.IN_PROGRESS}:\n${tasks[STATUS.IN_PROGRESS] || '-\n'}${STATUS.DONE}:\n${tasks[STATUS.DONE] || '-\n'}`);
 }
 
 addTask('walk a dog');
